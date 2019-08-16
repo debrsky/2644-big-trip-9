@@ -1,24 +1,20 @@
-import {createTripInfoMainTemplate} from "./components/trip-info-main.js";
-import {createTripTabsTemplate} from "./components/trip-tabs.js";
-import {createTripFiltersTemplate} from "./components/trip-filters.js";
-import {createTripSortTemplate} from "./components/trip-sort.js";
-import {createTripDaysTemplate} from "./components/trip-days.js";
+import {createTripInfoTemplate} from "./components/trip-info.js";
+import {createTripControlsTemplate} from "./components/trip-controls.js";
+import {createEventAddBtnTemplate} from "./components/event-add-btn.js";
+import {createTripEventsTemplate} from "./components/trip-events";
 
+import {getEvent} from "./data.js";
+
+const events = new Array(30).fill(``).map(()=>getEvent());
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
-const tripMainTripInfoElement = document.querySelector(`.trip-main .trip-main__trip-info`);
-render(tripMainTripInfoElement, createTripInfoMainTemplate(), `afterbegin`);
+const tripMainElement = document.querySelector(`.trip-main`);
+render(tripMainElement, createTripInfoTemplate(events), `beforeend`);
+render(tripMainElement, createTripControlsTemplate(), `beforeend`);
+render(tripMainElement, createEventAddBtnTemplate(), `beforeend`);
 
-const tripMainTripControlsElement = document.querySelector(`.trip-main .trip-controls`);
-const tripMainTripControlsHeaderElements = tripMainTripControlsElement.querySelectorAll(`h2`);
-
-render(tripMainTripControlsHeaderElements[0], createTripTabsTemplate(), `afterend`);
-render(tripMainTripControlsHeaderElements[1], createTripFiltersTemplate(), `afterend`);
-
-const tripEventsElement = document.querySelector(`.page-main .trip-events`);
-
-render(tripEventsElement, createTripSortTemplate(), `beforeend`);
-render(tripEventsElement, createTripDaysTemplate(), `beforeend`);
+const tripEventsElement = document.querySelector(`.page-main .page-body__container`);
+render(tripEventsElement, createTripEventsTemplate(events), `beforeend`);
