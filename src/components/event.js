@@ -5,7 +5,7 @@ export const createEventTemplate = ({
   destination,
   schedule,
   price,
-  description,
+  // description,
   offers
 }) => {
 

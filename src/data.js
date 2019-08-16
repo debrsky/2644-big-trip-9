@@ -80,4 +80,4 @@ const getEvent = () => {
 };
 
 
-export { getEvent };
+export {getEvent};

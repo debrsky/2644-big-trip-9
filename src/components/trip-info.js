@@ -2,7 +2,7 @@ const createTripInfoTemplate = (eventsOriginal) => {
   const events = Array.from(eventsOriginal);
 
   // временно
-  console.assert(events.length > 0);
+  console.assert(events.length > 0); // eslint-disable-line no-console
 
   events.sort((a, b) => a.schedule.start - b.schedule.start);
 
