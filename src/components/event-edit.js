@@ -1,22 +1,42 @@
+import {createElement} from "../utils.js";
 import {createOffersAvailableTemplate} from "./offers-available.js";
 import {createPhotosTapeTemplate} from "./photos-tape.js";
 
-const createEventEditTemplate = ({
-  eventType,
-  destination,
-  schedule,
-  price,
-  description,
-  offers,
-  photos
-}) => {
+class EventEdit {
+  constructor({
+    eventType,
+    destination,
+    schedule,
+    price,
+    description,
+    offers,
+    photos
+  }) {
+    // TODO клонирование вложенных объектов (schedule, offers, photos)
+    this._eventType = eventType;
+    this._destination = destination;
+    this._schedule = schedule;
+    this._price = price;
+    this._description = description;
+    this._offers = offers;
+    this._photos = photos;
+  }
 
-  return `<form class="event  event--edit" action="#" method="post">
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  getTemplate() {
+    return `<form class="event event--edit">
     <header class="event__header">
       <div class="event__type-wrapper">
         <label class="event__type  event__type-btn" for="event-type-toggle-1">
           <span class="visually-hidden">Choose event type</span>
-          <img class="event__type-icon" width="17" height="17" src="img/icons/${eventType}.png" alt="Event type icon">
+          <img class="event__type-icon" width="17" height="17" src="img/icons/${this._eventType}.png" alt="Event type icon">
         </label>
         <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -83,9 +103,9 @@ const createEventEditTemplate = ({
 
       <div class="event__field-group  event__field-group--destination">
         <label class="event__label  event__type-output" for="event-destination-1">
-          ${eventType} at
+          ${this._eventType} at
         </label>
-        <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${destination}" list="destination-list-1">
+        <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${this._destination}" list="destination-list-1">
         <datalist id="destination-list-1">
           <option value="Amsterdam"></option>
           <option value="Geneva"></option>
@@ -97,12 +117,12 @@ const createEventEditTemplate = ({
         <label class="visually-hidden" for="event-start-time-1">
           From
         </label>
-        <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${new Date(schedule.start).toISOString()}">
+        <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${new Date(this._schedule.start).toISOString()}">
         &mdash;
         <label class="visually-hidden" for="event-end-time-1">
           To
         </label>
-        <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${new Date(schedule.start + schedule.duration).toISOString()}">
+        <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${new Date(this._schedule.start + this._schedule.duration).toISOString()}">
       </div>
 
       <div class="event__field-group  event__field-group--price">
@@ -110,7 +130,7 @@ const createEventEditTemplate = ({
           <span class="visually-hidden">Price</span>
           &euro;
         </label>
-        <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${price}">
+        <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${this._price}">
       </div>
 
       <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -134,19 +154,20 @@ const createEventEditTemplate = ({
       <section class="event__section  event__section--offers">
         <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
-        ${createOffersAvailableTemplate(offers)}
+        ${createOffersAvailableTemplate(this._offers)}
       </section>
 
       <section class="event__section  event__section--destination">
         <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-        <p class="event__destination-description">${description}</p>
+        <p class="event__destination-description">${this._description}</p>
 
         <div class="event__photos-container">
-          ${createPhotosTapeTemplate(photos)}
+          ${createPhotosTapeTemplate(this._photos)}
         </div>
       </section>
     </section>
   </form>`;
-};
+  }
+}
 
-export {createEventEditTemplate};
+export default EventEdit;

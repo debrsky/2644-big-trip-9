@@ -1,13 +1,5 @@
 import {createDayTemplate} from "./day.js";
-
-const removeTime = (timestamp) => {
-  const date = new Date(timestamp);
-  date.setSeconds(0, 0);
-  date.setMinutes(0);
-  date.setHours(0);
-
-  return date.getTime();
-};
+import {removeTime} from "../helpers.js";
 
 
 const createTripDaysTemplate = (eventsOriginal) => {
