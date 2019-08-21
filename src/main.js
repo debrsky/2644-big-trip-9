@@ -35,7 +35,7 @@ const renderEvent = (eventMock, eventsContainer) => {
   event.getElement()
     .querySelector(`.event__rollup-btn`)
     .addEventListener(`click`, () => {
-      eventsContainer.replaceChild(eventEdit.getElement(), event.getElement());
+      event.getElement().replaceWith(eventEdit.getElement());
       // document.addEventListener(`keydown`, onEscKeyDown);
     });
 
@@ -47,7 +47,7 @@ const renderEvent = (eventMock, eventsContainer) => {
   eventEdit.getElement()
     .querySelector(`.event__rollup-btn`)
     .addEventListener(`click`, () => {
-      eventsContainer.replaceChild(event.getElement(), eventEdit.getElement());
+      eventEdit.getElement().replaceWith(event.getElement());
       // document.addEventListener(`keydown`, onEscKeyDown);
     });
 
